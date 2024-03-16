@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('product_files', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->string('file');
             $table->timestamps();
         });
     }
