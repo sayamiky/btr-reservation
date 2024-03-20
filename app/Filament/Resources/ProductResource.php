@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+// use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -32,9 +33,13 @@ class ProductResource extends Resource
                     ->required()
                     ->cols(4)
                     ->maxLength(65535),
-
+                Forms\Components\FileUpload::make('file')
+                    ->disk('local')
+                    ->directory('products')
+                    ->visibility('private'),
                 Forms\Components\Toggle::make('status')
-                    ->required(),
+                    ->required()
+                
             ]);
     }
 
@@ -42,17 +47,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('name')->limit(40),
+                Tables\Columns\TextColumn::make('description')->limit(40),
                 Tables\Columns\TextColumn::make('price'),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\IconColumn::make('status')->boolean(),
             ])
             ->filters([
                 Tables\Filters\Filter::make('name'),

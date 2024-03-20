@@ -6,20 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class ProductFile extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "products";
+    protected $table = 'product_files';
     protected $fillable = [
-        'name',
-        'price',
-        'description',
-        'status'
+        'product_id',
+        'file'
     ];
 
-    function productFile() {
-        return $this->hasMany(ProductFile::class);
+    function product() {
+        return $this->belongsTo(Product::class);
     }
 }
-  
