@@ -52,12 +52,6 @@ class DriverResource extends Resource
                 Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\IconColumn::make('status')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
@@ -69,14 +63,14 @@ class DriverResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -84,5 +78,5 @@ class DriverResource extends Resource
             'create' => Pages\CreateDriver::route('/create'),
             'edit' => Pages\EditDriver::route('/{record}/edit'),
         ];
-    }    
+    }
 }
