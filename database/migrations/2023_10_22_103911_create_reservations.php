@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('reservation_code', 12);
+            $table->datetime('reservation_date');
             $table->string('invoice_code');
-            $table->unsignedBigInteger('partner_id');
-            $table->foreign('partner_id')->references('id')->on('partners');
-            $table->string('voucher_code');
+            $table->string('voucher_code')->nullable();
             $table->enum('payment_type', ['cash', 'cc']);
             $table->integer('total');
             $table->enum('status', ['not paid', 'paid', 'down payment']);
+            $table->unsignedBigInteger('partner_id')->nullable();
+            $table->foreign('partner_id')->references('id')->on('partners');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

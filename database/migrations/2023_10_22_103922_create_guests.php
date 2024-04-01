@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('reservation_id');
+            $table->foreign('reservation_id')->references('id')->on('reservations');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email');
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }
