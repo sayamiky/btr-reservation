@@ -10,7 +10,7 @@ class Driver extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "drivers";
+    protected $table = 'drivers';
     protected $fillable = [
         'name',
         'phone',
@@ -18,4 +18,8 @@ class Driver extends Model
         'address',
         'status',
     ];
+
+    function transfer() {
+        return $this->hasMany(TransferReservation::class);
+    }
 }

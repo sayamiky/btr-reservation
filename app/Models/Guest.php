@@ -10,7 +10,7 @@ class Guest extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "guests";
+    protected $table = 'guests';
     protected $fillable = [
         'name',
         'phone',
@@ -18,4 +18,8 @@ class Guest extends Model
         'address',
         'status',
     ];
+
+    function reservation() {
+        return $this->belongsTo(Reservation::class);
+    }
 }

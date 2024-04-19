@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Reservation\TransferReservationResource;
 use App\Models\Reservation;
+use App\Models\TransferReservation;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -61,5 +63,14 @@ class ReservationController extends Controller
     public function destroy(Reservation $reservation)
     {
         //
+    }
+
+    public function driverInformation($reservation_code)
+    {
+        $driver = TransferReservation::with('driver')->where('reservation_code', $reservation_code)->first();
+        return (new TransferReservationResource($driver))->additional([
+            'message' => 'success',
+            'status' => true
+        ]);
     }
 }

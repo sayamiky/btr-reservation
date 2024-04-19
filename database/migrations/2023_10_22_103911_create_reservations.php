@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('reservation_code', 12);
+            $table->string('reservation_code', 12)->index()->unique();
             $table->datetime('reservation_date');
             $table->string('invoice_code');
             $table->string('voucher_code')->nullable();

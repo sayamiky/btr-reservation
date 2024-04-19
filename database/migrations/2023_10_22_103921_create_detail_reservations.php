@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('detail_reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reservation_id');
-            $table->foreign('reservation_id')->references('id')->on('reservations');
+            $table->string('reservation_code', 12)->index();
+            $table->foreign('reservation_code')->references('reservation_code')->on('reservations');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->enum('pax_type', ['adult', 'child']);
             $table->integer('price');
+            $table->integer('discount')->default(0); //foc
             $table->integer('qty');
             $table->integer('total');
-            $table->integer('custom_price');
             $table->timestamps();
         });
     }

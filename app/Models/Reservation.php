@@ -10,7 +10,7 @@ class Reservation extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "products";
+    protected $table = 'reservations';
     protected $fillable = [
         'reservation_code',
         'reservation_date',
@@ -39,6 +39,6 @@ class Reservation extends Model
 
     function transfer()
     {
-        return $this->hasOne(TransferReservation::class);
+        return $this->hasOne(TransferReservation::class, 'reservation_code', 'reservation_code');
     }
 }

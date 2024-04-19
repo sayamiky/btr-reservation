@@ -10,7 +10,7 @@ class Partner extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = "partners";
+    protected $table = 'partners';
     protected $fillable = [
         'name',
         'phone',
