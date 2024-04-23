@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reservation_code', 12)->index()->unique();
             $table->datetime('reservation_date');
-            $table->string('invoice_code');
+            $table->string('invoice_code')->nullable();
             $table->string('voucher_code')->nullable();
             $table->enum('payment_type', ['cash', 'cc']);
             $table->integer('total');
