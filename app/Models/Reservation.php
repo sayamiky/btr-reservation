@@ -29,12 +29,12 @@ class Reservation extends Model
 
     function detail()
     {
-        return $this->hasMany(DetailReservation::class);
+        return $this->hasMany(DetailReservation::class, 'reservation_code', 'reservation_code');
     }
 
     function guest()
     {
-        return $this->hasOne(Guest::class);
+        return $this->hasOne(Guest::class, 'reservation_code', 'reservation_code');
     }
 
     function transfer()

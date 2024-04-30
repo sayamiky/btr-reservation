@@ -43,8 +43,7 @@ class ReservationResource extends Resource
 
                 Forms\Components\Group::make()
                     ->relationship(
-                        'transfer',
-                        condition: fn (?array $state): bool => filled($state['driver_id']),
+                        'transfer'
                     )
                     ->schema([
                         Forms\Components\Select::make('driver_id')
@@ -65,14 +64,30 @@ class ReservationResource extends Resource
                         Forms\Components\TextInput::make('price')
                             ->label('Price')
                             ->numeric(),
-                        Forms\Components\TextInput::make('Note')
+                        Forms\Components\TextInput::make('note')
                             ->label('Note'),
-                        // Forms\Components\TextInput::make('email')
-                        //     ->label('Email address')
-                        //     ->email()
-                        //     ->requiredWith('name'),
                     ]),
-                Forms\Components\Repeater::make('Reservation Details')
+
+                Forms\Components\Group::make()
+                    ->relationship(
+                        'guest',
+                    )
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Name'),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Phone'),
+                        Forms\Components\TextInput::make('email')
+                            ->label('Email address')
+                            ->email()
+                            ->requiredWith('name'),
+                        Forms\Components\Textarea::make('address')
+                            ->required()
+                            ->cols(4)
+                            ->maxLength(65535)
+                            ->label('Address'),
+                    ]),
+                Forms\Components\Repeater::make('reservation_details')
                     ->schema([
                         Forms\Components\Select::make('product_id')
                             ->label('Product')
@@ -86,18 +101,6 @@ class ReservationResource extends Resource
                         Forms\Components\TextInput::make('qty')->required(),
                     ])
                     ->columns(2),
-                // Forms\Components\Textarea::make('description')
-                //     ->required()
-                //     ->cols(4)
-                //     ->maxLength(65535),
-                // Forms\Components\FileUpload::make('file')
-                //     ->disk('local')
-                //     ->directory('products')
-                //     ->visibility('private'),
-                // Forms\Components\Toggle::make('status')
-                //     ->required()
-
-
             ]);
     }
 
@@ -105,10 +108,15 @@ class ReservationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('reservation_code')->limit(40),
-                Tables\Columns\TextColumn::make('reservation_date')->limit(40),
+                Tables\Columns\TextColumn::make('reservation_code')->limit(40)->copyable(),
+                Tables\Columns\TextColumn::make('guest.name'),
+                Tables\Columns\TextColumn::make('reservation_date')->date(),
                 Tables\Columns\TextColumn::make('total'),
-                Tables\Columns\IconColumn::make('status'),
+                Tables\Columns\TextColumn::make('status')->enum([
+                    'not paid' => 'Not Paid',
+                    'paid' => 'Paid',
+                    'cancel' => 'Cancel',
+                ]),
             ])
             ->filters([
                 Tables\Filters\Filter::make('reservation_code'),

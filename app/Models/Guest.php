@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guest extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'guests';
     protected $fillable = [
+        'reservation_code',
         'name',
         'phone',
         'email',
@@ -19,7 +20,8 @@ class Guest extends Model
         'status',
     ];
 
-    function reservation() {
-        return $this->belongsTo(Reservation::class);
+    function reservation()
+    {
+        return $this->belongsTo(Reservation::class, 'reservation_code', 'reservation_code');
     }
 }

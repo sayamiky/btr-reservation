@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('reservation_code', 12)->index()->unique();
-            $table->datetime('reservation_date');
+            $table->date('reservation_date');
             $table->string('invoice_code')->nullable();
             $table->string('voucher_code')->nullable();
             $table->enum('payment_type', ['cash', 'cc']);

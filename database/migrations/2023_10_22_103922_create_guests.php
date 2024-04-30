@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reservation_id');
-            $table->foreign('reservation_id')->references('id')->on('reservations');
+            $table->string('reservation_code', 12)->index();
+            $table->foreign('reservation_code')->references('reservation_code')->on('reservations');
             $table->string('name');
             $table->string('phone');
             $table->string('email');
