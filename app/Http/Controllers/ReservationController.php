@@ -33,13 +33,13 @@ class ReservationController extends Controller
             'pickup_time' => ['required', 'date_format:H:i']
         ]);
 
+        $reservation = Reservation::where('reservation_code', $reservation_code)->first();
+        
         $transfer = TransferReservation::where('reservation_code', $reservation_code)->update([
             'pickup_time' => $request->pickup_time
         ]);
 
-        $transfer = TransferReservation::where('reservation_code', $reservation_code)->first();
-
-        return (new TransferReservationResource($transfer))->additional([
+        return (new ReservationResource($reservation->loadMissing('guest', 'transfer')))->additional([
             'message' => 'success',
             'status' => true
         ]);

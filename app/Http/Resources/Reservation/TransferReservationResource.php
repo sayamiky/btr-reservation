@@ -15,7 +15,6 @@ class TransferReservationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
             'reservation_code' => $this->reservation_code,
             'driver_id' => $this->driver_id,
             'driver_name' => $this->driver->name,
