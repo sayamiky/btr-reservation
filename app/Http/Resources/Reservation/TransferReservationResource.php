@@ -20,6 +20,8 @@ class TransferReservationResource extends JsonResource
             'driver_name' => $this->driver->name,
             'driver_phone' => $this->driver->phone,
             'driver_email' => $this->driver->email,
+            'venichle_type' => $this->driver->venichle_type,
+            'license_plate' => $this->driver->license_plate,
             'pickup_location' => $this->pickup_location,
             'pickup_time' => $this->pickup_time,
             'dropoff_location' => $this->dropoff_location,

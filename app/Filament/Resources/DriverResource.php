@@ -37,6 +37,12 @@ class DriverResource extends Resource
                 Forms\Components\Textarea::make('address')
                     ->required()
                     ->maxLength(65535),
+                Forms\Components\TextInput::make('venichle_type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('license_plate')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Toggle::make('status')
                     ->required(),
             ]);

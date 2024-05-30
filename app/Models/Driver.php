@@ -16,10 +16,13 @@ class Driver extends Model
         'phone',
         'email',
         'address',
+        'venichle_type',
+        'license_plate',
         'status',
     ];
 
-    function transfer() {
+    function transfer()
+    {
         return $this->hasMany(TransferReservation::class);
     }
 }
