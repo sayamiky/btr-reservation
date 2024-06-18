@@ -33,7 +33,8 @@ class CreateReservation extends CreateRecord
 
         $record->update([
             'invoice_code' => "INV/" . now()->format('Ymd') . "/BTR/" . $record->id,
-            'total' => $record->detail->sum('total') 
+            'total' => $record->detail->sum('total'),
+            'original_date' => $record->reservation_date 
             // + $transfer
         ]);
 

@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/driver-information/{reservation_code}', [ReservationController::class, 'driverInformation']);
 Route::put('/pickup-schedule/{reservation_code}', [ReservationController::class, 'changePickupSchedule']);
 Route::put('/reschedule/{reservation_code}', [ReservationController::class, 'reschedule']);
+
+Route::get('/test-mailing/{reservation_code}', [ReservationController::class, 'mailingTester']);

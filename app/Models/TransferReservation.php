@@ -15,6 +15,7 @@ class TransferReservation extends Model
         'driver_id',
         'pickup_location',
         'pickup_time',
+        'original_pickup',
         'dropoff_location',
         'dropoff_time',
         'distance',

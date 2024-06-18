@@ -14,6 +14,7 @@ class Reservation extends Model
     protected $fillable = [
         'reservation_code',
         'reservation_date',
+        'original_date',
         'invoice_code',
         'voucher_code',
         'payment_type',

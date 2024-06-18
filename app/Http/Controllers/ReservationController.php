@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Reservation\TransferReservationResource;
 use App\Http\Resources\Reservation\ReservationResource;
+use App\Mail\SendDriverInfoPickup;
+use App\Mail\SendDriverInfoReschedule;
+use App\Mail\SendNotificationPickup;
+use App\Mail\SendNotificationReschedule;
 use App\Models\Reservation;
 use App\Models\TransferReservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
@@ -39,6 +44,9 @@ class ReservationController extends Controller
             'pickup_time' => $request->pickup_time
         ]);
 
+        Mail::to($reservation->guest->email)->send(new SendNotificationPickup($reservation));
+        Mail::to($reservation->transfer->driver->email)->send(new SendDriverInfoPickup($reservation));
+
         return (new ReservationResource($reservation->loadMissing('guest', 'transfer')))->additional([
             'message' => 'success',
             'status' => true
@@ -57,9 +65,28 @@ class ReservationController extends Controller
 
         $reservation = Reservation::where('reservation_code', $reservation_code)->first();
 
+        Mail::to($reservation->guest->email)->send(new SendNotificationReschedule($reservation));
+        Mail::to($reservation->transfer->driver->email)->send(new SendDriverInfoReschedule($reservation));
+
         return (new ReservationResource($reservation))->additional([
             'message' => 'success',
             'status' => true
+        ]);
+    }
+
+    function mailingTester($reservation_code) {
+        $reservation = Reservation::where('reservation_code', $reservation_code)->first();
+
+        $mail = Mail::to($reservation->guest->email)->send(new SendNotificationReschedule($reservation));
+
+        if (!$mail) {
+            return response()->json([
+                'status' => false
+            ]);
+        }
+
+        return response()->json([
+            'status' => "success"
         ]);
     }
 }
