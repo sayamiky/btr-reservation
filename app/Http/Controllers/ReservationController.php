@@ -63,7 +63,7 @@ class ReservationController extends Controller
 
         if (Carbon::parse($request->reservation_date) < now()) {
             return response()->json([
-                'message' => 'The reservation date field must be a date after now.',
+                'msg' => 'The reservation date field must be a date after now.',
                 'status' => false
             ])->setStatusCode(500);
         }
