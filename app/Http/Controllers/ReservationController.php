@@ -10,6 +10,7 @@ use App\Mail\SendNotificationPickup;
 use App\Mail\SendNotificationReschedule;
 use App\Models\Reservation;
 use App\Models\TransferReservation;
+use App\Rules\MinimumDaysRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -56,7 +57,7 @@ class ReservationController extends Controller
     public function reschedule(Request $request, $reservation_code)
     {
         $request->validate([
-            'reservation_date' => ['required', 'date_format:Y-m-d']
+            'reservation_date' => ['required', 'date_format:Y-m-d', new MinimumDaysRule($reservation_code)]
         ]);
 
         $reservation = Reservation::where('reservation_code', $reservation_code)->update([
