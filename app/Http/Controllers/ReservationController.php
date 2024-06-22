@@ -11,6 +11,7 @@ use App\Mail\SendNotificationReschedule;
 use App\Models\Reservation;
 use App\Models\TransferReservation;
 use App\Rules\MinimumDaysRule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -57,9 +58,15 @@ class ReservationController extends Controller
     public function reschedule(Request $request, $reservation_code)
     {
         $request->validate([
-            'reservation_date' => ['required', 'date_format:Y-m-d', 'after:now']
+            'reservation_date' => ['required', 'date_format:Y-m-d']
         ]);
 
+        if (Carbon::parse($request->reservation_date) < now()) {
+            return response()->json([
+                'message' => 'The reservation date field must be a date after now.',
+                'status' => false
+            ])->setStatusCode(500);
+        }
         $reservation = Reservation::where('reservation_code', $reservation_code)->update([
             'reservation_date' => $request->reservation_date
         ]);
