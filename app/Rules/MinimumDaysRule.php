@@ -23,7 +23,7 @@ class MinimumDaysRule implements ValidationRule
     {
         $inputDate = Carbon::parse($value);
         $rsv = Reservation::where('reservation_code', $this->reservationCode)->first();
-        $reservationDate = Carbon::parse($rsv->reservation_date)->format('Y-m-d');
+        $reservationDate = Carbon::parse($rsv->original_date)->format('Y-m-d');
         
         if (!$inputDate->diffInDays($reservationDate) >= 3) {
             $fail("Reschedule should be done before H-3 reservation date");
