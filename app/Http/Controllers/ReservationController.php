@@ -57,7 +57,7 @@ class ReservationController extends Controller
     public function reschedule(Request $request, $reservation_code)
     {
         $request->validate([
-            'reservation_date' => ['required', 'date_format:Y-m-d', new MinimumDaysRule($reservation_code)]
+            'reservation_date' => ['required', 'date_format:Y-m-d', 'after:now']
         ]);
 
         $reservation = Reservation::where('reservation_code', $reservation_code)->update([
